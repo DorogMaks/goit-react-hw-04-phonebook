@@ -11,6 +11,8 @@ export class App extends Component {
       { id: 'id-2', name: 'Leia Organa', number: '443-89-12' },
       { id: 'id-3', name: 'Han Solo', number: '645-17-79' },
       { id: 'id-4', name: 'Chewbacca', number: '227-91-26' },
+      { id: 'id-5', name: 'Ahsoka Tano', number: '164-49-65' },
+      { id: 'id-6', name: 'Boba Fett', number: '459-82-46' },
     ],
     filter: '',
   };
@@ -32,6 +34,12 @@ export class App extends Component {
 
     this.setState(prevState => ({
       contacts: [contact, ...prevState.contacts],
+    }));
+  };
+
+  delContact = contactId => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== contactId),
     }));
   };
 
@@ -57,7 +65,10 @@ export class App extends Component {
 
         <h2>Contacts</h2>
         <Filter filter={this.state.filter} handleFilter={this.handleFilter} />
-        <ContactList filteredContacts={this.getFilteredContacts()} />
+        <ContactList
+          filteredContacts={this.getFilteredContacts()}
+          delContact={this.delContact}
+        />
       </div>
     );
   }
