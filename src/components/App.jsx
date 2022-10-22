@@ -5,14 +5,16 @@ export class App extends Component {
   state = {
     contacts: [],
     name: '',
+    number: '',
   };
 
-  addContact = name => {
+  addContact = (name, number) => {
     const contact = {
       id: nanoid(5),
       name,
+      number,
     };
-
+    // console.log(contact);
     this.setState(prevState => ({
       contacts: [contact, ...prevState.contacts],
     }));
@@ -27,10 +29,10 @@ export class App extends Component {
   handleSubmit = evt => {
     evt.preventDefault();
 
-    this.addContact(this.state.name);
+    this.addContact(this.state.name, this.state.number);
     // this.props.onSubmit(this.state.name);
 
-    this.setState({ name: '' });
+    this.setState({ name: '', number: '' });
   };
 
   render() {
@@ -52,6 +54,18 @@ export class App extends Component {
                 onChange={this.handleСhange}
               />
             </label>
+            <label>
+              Number
+              <input
+                type="tel"
+                name="number"
+                pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+                title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+                required
+                value={this.state.number}
+                onChange={this.handleСhange}
+              />
+            </label>
             <button type="submit">Add contact</button>
           </form>
 
@@ -59,11 +73,12 @@ export class App extends Component {
           <ul>
             {this.state.contacts.map(contact => (
               <li key={contact.id}>
-                <p>{contact.name}</p>
+                <p>
+                  {contact.name}: {contact.number}
+                </p>
                 {/* <button type="button">Delete</button> */}
               </li>
             ))}
-            <li></li>
           </ul>
         </div>
       </>
