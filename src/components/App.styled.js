@@ -13,8 +13,7 @@ export const Wrapper = styled.div`
   margin-right: auto;
   padding: 16px;
   max-width: 300px;
-  min-height: 700px;
   transform: translateY(20px);
-  border: thick dashed green;
+  border: dashed green;
   border-radius: 10px;
 `;

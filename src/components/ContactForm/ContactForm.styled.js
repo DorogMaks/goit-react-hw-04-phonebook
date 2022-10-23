@@ -36,6 +36,9 @@ export const Button = styled.button`
   border-radius: 4px;
   cursor: pointer;
 
+  transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+
   :hover {
     color: #fff;
     background-color: green;
