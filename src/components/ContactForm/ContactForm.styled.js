@@ -1,1 +1,43 @@
 import styled from 'styled-components';
+
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: black solid 2px;
+  border-radius: 4px;
+`;
+
+export const Label = styled.label`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: 600;
+`;
+
+export const Span = styled.span`
+  display: block;
+  margin-bottom: 6px;
+`;
+
+export const Input = styled.input`
+  padding: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 4px;
+`;
+
+export const Button = styled.button`
+  width: 100px;
+  height: 30px;
+  background-color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+
+  :hover {
+    color: #fff;
+    background-color: green;
+  }
+`;
