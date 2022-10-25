@@ -4,6 +4,7 @@ import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactList/ContactList';
 import { TitleApp, TitleContacts, Wrapper } from './App.styled';
+import { Modal } from './Modal/Modal';
 
 export class App extends Component {
   state = {
@@ -16,6 +17,7 @@ export class App extends Component {
       { id: 'id-6', name: 'Boba Fett', number: '459-82-46' },
     ],
     filter: '',
+    showModal: false,
   };
 
   componentDidMount() {
@@ -77,11 +79,25 @@ export class App extends Component {
     );
   };
 
+  toggleModal = () => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+    }));
+  };
+
   render() {
     return (
       <Wrapper>
         <TitleApp>Phonebook</TitleApp>
-        <ContactForm addContact={this.addContact} />
+        <button type="button" onClick={this.toggleModal}>
+          Add contact
+        </button>
+
+        {this.state.showModal && (
+          <Modal onClose={this.toggleModal}>
+            <ContactForm addContact={this.addContact} />
+          </Modal>
+        )}
 
         <TitleContacts>Contacts</TitleContacts>
         <Filter filter={this.state.filter} handleFilter={this.handleFilter} />

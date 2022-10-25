@@ -51,7 +51,7 @@ export class ContactForm extends Component {
             onChange={this.handleСhange}
           />
         </Label>
-        <Button type="submit">Add contact</Button>
+        <Button type="submit">Save contact</Button>
       </Form>
     );
   }
