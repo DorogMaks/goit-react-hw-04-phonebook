@@ -3,7 +3,7 @@ import { nanoid } from 'nanoid';
 import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactList/ContactList';
-import { TitleApp, TitleContacts, Wrapper } from './App.styled';
+import { Button, TitleApp, TitleContacts, Wrapper } from './App.styled';
 import { Modal } from './Modal/Modal';
 
 export class App extends Component {
@@ -36,6 +36,10 @@ export class App extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (this.state.contacts !== prevState.contacts) {
       localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+
+    if (this.state.contacts.length > prevState.contacts.length) {
+      this.toggleModal();
     }
   }
 
@@ -89,13 +93,15 @@ export class App extends Component {
     return (
       <Wrapper>
         <TitleApp>Phonebook</TitleApp>
-        <button type="button" onClick={this.toggleModal}>
+        <Button type="button" onClick={this.toggleModal}>
           Add contact
-        </button>
-
+        </Button>
         {this.state.showModal && (
           <Modal onClose={this.toggleModal}>
-            <ContactForm addContact={this.addContact} />
+            <ContactForm
+              onAddContact={this.addContact}
+              onClose={this.toggleModal}
+            />
           </Modal>
         )}
 
@@ -103,7 +109,7 @@ export class App extends Component {
         <Filter filter={this.state.filter} handleFilter={this.handleFilter} />
         <ContactList
           filteredContacts={this.getFilteredContacts()}
-          delContact={this.delContact}
+          onDelContact={this.delContact}
         />
       </Wrapper>
     );
