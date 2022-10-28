@@ -3,8 +3,11 @@ import { nanoid } from 'nanoid';
 import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactList/ContactList';
-import { Button, TitleApp, TitleContacts, Wrapper } from './App.styled';
-import { Modal } from './Modal/Modal';
+import {
+  getContactsFromLS,
+  setContactsToLS,
+} from 'helpers/localStorageOperations';
+import { TitleApp, TitleContacts, Wrapper } from './App.styled';
 
 export class App extends Component {
   state = {
@@ -17,29 +20,23 @@ export class App extends Component {
       { id: 'id-6', name: 'Boba Fett', number: '459-82-46' },
     ],
     filter: '',
-    showModal: false,
   };
 
   componentDidMount() {
-    const contacts = localStorage.getItem('contacts');
-    const parsedContacts = JSON.parse(contacts);
+    const contactsFromLS = getContactsFromLS();
 
-    if (contacts === null) {
-      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    if (contactsFromLS === null) {
+      setContactsToLS(this.state.contacts);
     }
 
-    if (parsedContacts) {
-      this.setState({ contacts: parsedContacts });
+    if (contactsFromLS) {
+      this.setState({ contacts: contactsFromLS });
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.contacts !== prevState.contacts) {
-      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-    }
-
-    if (this.state.contacts.length > prevState.contacts.length) {
-      this.toggleModal();
+      setContactsToLS(this.state.contacts);
     }
   }
 
@@ -83,28 +80,11 @@ export class App extends Component {
     );
   };
 
-  toggleModal = () => {
-    this.setState(({ showModal }) => ({
-      showModal: !showModal,
-    }));
-  };
-
   render() {
     return (
       <Wrapper>
         <TitleApp>Phonebook</TitleApp>
-        <Button type="button" onClick={this.toggleModal}>
-          Add contact
-        </Button>
-        {this.state.showModal && (
-          <Modal onClose={this.toggleModal}>
-            <ContactForm
-              onAddContact={this.addContact}
-              onClose={this.toggleModal}
-            />
-          </Modal>
-        )}
-
+        <ContactForm onAddContact={this.addContact} />
         <TitleContacts>Contacts</TitleContacts>
         <Filter filter={this.state.filter} handleFilter={this.handleFilter} />
         <ContactList

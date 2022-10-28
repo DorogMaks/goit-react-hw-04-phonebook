@@ -1,14 +1,6 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
-  Button,
-  ButtonClose,
-  Buttons,
-  Form,
-  Input,
-  Label,
-  Span,
-} from './ContactForm.styled';
+import { Button, Form, Input, Label, Span } from './ContactForm.styled';
 
 export class ContactForm extends Component {
   state = {
@@ -32,7 +24,6 @@ export class ContactForm extends Component {
 
   render() {
     const { name, number } = this.state;
-    const { onClose } = this.props;
 
     return (
       <Form autoComplete="off" onSubmit={this.handleSubmit}>
@@ -60,12 +51,7 @@ export class ContactForm extends Component {
             onChange={this.handleСhange}
           />
         </Label>
-        <Buttons>
-          <Button type="submit">Save contact</Button>
-          <ButtonClose type="button" onClick={onClose}>
-            Cancel
-          </ButtonClose>
-        </Buttons>
+        <Button type="submit">Save contact</Button>
       </Form>
     );
   }
@@ -73,5 +59,4 @@ export class ContactForm extends Component {
 
 ContactForm.propTypes = {
   onAddContact: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired,
 };
