@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useLocalStorage } from 'hooks/useLocalStorageOperations';
 import { CONTACTS_LS_KEY } from 'constants/localStorageKeys';
+import { getFilteredContacts } from './helpers/getFilteredContacts';
 import { ContactForm } from '../ContactForm/ContactForm';
 import { Filter } from '../Filter/Filter';
 import { ContactList } from '../ContactList/ContactList';
@@ -36,14 +37,6 @@ export const App = () => {
     setFilter(evt.currentTarget.value);
   };
 
-  const getFilteredContacts = () => {
-    const normalizedFilter = filter.toLowerCase();
-
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalizedFilter)
-    );
-  };
-
   return (
     <Wrapper>
       <TitleApp>Phonebook</TitleApp>
@@ -51,7 +44,7 @@ export const App = () => {
       <TitleContacts>Contacts</TitleContacts>
       <Filter filter={filter} handleFilter={handleFilter} />
       <ContactList
-        filteredContacts={getFilteredContacts()}
+        filteredContacts={getFilteredContacts(filter, contacts)}
         onDelContact={delContact}
       />
     </Wrapper>
